@@ -1,0 +1,4 @@
+# Ignorar archivos PDF y JPG
+
+*.pdf
+*.jpg

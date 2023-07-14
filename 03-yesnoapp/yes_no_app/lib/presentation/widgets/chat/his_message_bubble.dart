@@ -1,8 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
 
 class HisMessageBubble extends StatelessWidget {
+  final Message message;
+
+  const HisMessageBubble({
+    super.key,
+    required this.message,
+  });
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -18,7 +26,7 @@ class HisMessageBubble extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'EY PIBE',
+              message.text,
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -26,7 +34,7 @@ class HisMessageBubble extends StatelessWidget {
 
         const SizedBox(height: 5),
 
-        _ImageBubble(), //Image Widgets
+        _ImageBubble(imageURL: message.meme!), //Image Widgets
 
         const SizedBox(height: 5),
       ],
@@ -35,6 +43,12 @@ class HisMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
+  final String imageURL;
+
+  const _ImageBubble({
+    required this.imageURL,
+  });
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context)
@@ -44,14 +58,15 @@ class _ImageBubble extends StatelessWidget {
         //Image edit
         borderRadius: BorderRadius.circular(30),
         child: Image.network(
-          "https://yesno.wtf/assets/yes/3-422e51268d64d78241720a7de52fe121.gif",
+          imageURL,
           width: size.width * 0.7,
           height: 150,
           fit: BoxFit.cover, //Place the image in the correct space
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) return child; //Return image
 
-            return Container( //If the image is not loaded, then show a text 
+            return Container(
+              //If the image is not loaded, then show a text
               width: size.width * 0.7,
               height: 150,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter + Material 3'),
       ),
-      body: _HomeView(),
+      body: const _HomeView(),
     );
   }
 }

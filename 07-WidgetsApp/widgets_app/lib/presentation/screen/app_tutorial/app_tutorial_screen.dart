@@ -77,14 +77,15 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
                   imageURL: slideData.imageURL))
               .toList(),
         ),
-        Positioned(
-          right: 20,
-          top: 50,
-          child: ElevatedButton(
-            onPressed: () => context.pop(), 
-            child: const Text('Skip')
-          )
-        ),
+        endReached ? const SizedBox() : Positioned(
+            right: 20,
+            top: 50,
+            child: ElevatedButton(
+              onPressed: () => context.pop(), 
+              child: const Text('Skip')
+            )
+          ),
+
         endReached
             ? Positioned(
                 bottom: 30,

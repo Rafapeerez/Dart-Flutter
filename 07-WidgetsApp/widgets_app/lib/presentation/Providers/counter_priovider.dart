@@ -1,3 +1,3 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final counterProvider = StateProvider((ref) => 5); //Init value
+final counterProvider = StateProvider<int>((ref) => 5); //Init value

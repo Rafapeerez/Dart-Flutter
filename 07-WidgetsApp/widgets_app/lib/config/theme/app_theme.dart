@@ -11,8 +11,7 @@ class AppTheme {
     this.isDarkMode = false,
 
   })  : assert(selectedColor >= 0, 'Selected color must be greater than 0'),
-        assert(selectedColor < colorList.length,
-            'Selected color must be less or equals than ${colorList.length - 1}');
+        assert(selectedColor < colorList.length, 'Selected color must be less or equals than ${colorList.length - 1}');
 
   ThemeData getTheme() => ThemeData(
     useMaterial3: true,
@@ -21,5 +20,14 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       centerTitle: false,
     )
+  );
+
+  //Importante para tener las propiedades final y el estado inmutable. MUY UTIL
+  AppTheme copyWith({
+    int? selectedColor,
+    bool? isDarkMode
+  }) => AppTheme( 
+    selectedColor: selectedColor ?? this.selectedColor,
+    isDarkMode: isDarkMode ?? this.isDarkMode
   );
 }

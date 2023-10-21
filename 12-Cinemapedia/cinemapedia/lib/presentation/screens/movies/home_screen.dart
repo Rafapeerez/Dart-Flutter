@@ -34,14 +34,65 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    //final nowPlayingMoving = ref.watch(nowPlayingMoviesProvider);
+    final nowPlayingMoving = ref.watch(nowPlayingMoviesProvider);
     final slideshowMovies = ref.watch(moviesSlideshowProvider);
     
-    return Column(
-      children: [
-        const CustomAppBar(),
-        MoviesSlideshow(movies: slideshowMovies),
-      ],
+    //CustomScrollView doesnt have child propertie, thats why we use slivers.
+    return CustomScrollView(
+      slivers: [
+
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomAppBar(),
+            titlePadding: EdgeInsets.zero ,
+            centerTitle: false,
+          ),
+        ),
+
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return Column(
+                children: [
+                  //const CustomAppBar(),
+
+                  MoviesSlideshow(movies: slideshowMovies),
+
+                  MovieHorizontalListView(
+                    movies: nowPlayingMoving,
+                    title: 'En cines',
+                    subtitle: 'Actualidad',
+                    loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                  ),
+
+                  MovieHorizontalListView(
+                    movies: nowPlayingMoving,
+                    title: 'Próximamente...',
+                    loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                  ),
+
+                  MovieHorizontalListView(
+                    movies: nowPlayingMoving,
+                    title: 'Populares',
+                    loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                  ),
+
+                  MovieHorizontalListView(
+                    movies: nowPlayingMoving,
+                    title: 'Mejor calificadas',
+                    loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                  ),
+
+                  const SizedBox( height: 15 )
+                ],
+              );
+
+            },
+            childCount: 1
+          ),
+        )
+      ] 
     );
   }
 }

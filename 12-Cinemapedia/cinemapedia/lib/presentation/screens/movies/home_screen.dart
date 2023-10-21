@@ -30,12 +30,18 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     super.initState();
 
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
     final nowPlayingMoving = ref.watch(nowPlayingMoviesProvider);
     final slideshowMovies = ref.watch(moviesSlideshowProvider);
+    final popularMovies = ref.watch(popularMoviesProvider);
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
     
     //CustomScrollView doesnt have child propertie, thats why we use slivers.
     return CustomScrollView(
@@ -61,27 +67,27 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
                   MovieHorizontalListView(
                     movies: nowPlayingMoving,
-                    title: 'En cines',
-                    subtitle: 'Actualidad',
+                    title: 'Now Playing',
+                    subtitle: 'Present',
                     loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
                   ),
 
                   MovieHorizontalListView(
-                    movies: nowPlayingMoving,
-                    title: 'Próximamente...',
-                    loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                    movies: popularMovies,
+                    title: 'Popular',
+                    loadNextPage: () => ref.read(popularMoviesProvider.notifier).loadNextPage(),
                   ),
 
                   MovieHorizontalListView(
-                    movies: nowPlayingMoving,
-                    title: 'Populares',
-                    loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                    movies: upcomingMovies,
+                    title: 'Upcoming...',
+                    loadNextPage: () => ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
                   ),
 
                   MovieHorizontalListView(
-                    movies: nowPlayingMoving,
-                    title: 'Mejor calificadas',
-                    loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                    movies: topRatedMovies,
+                    title: 'Top Rated',
+                    loadNextPage: () => ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
                   ),
 
                   const SizedBox( height: 15 )

@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/config/helpers/human_formats.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MovieHorizontalListView extends StatefulWidget {
   final List<Movie> movies;
@@ -18,12 +19,12 @@ class MovieHorizontalListView extends StatefulWidget {
   });
 
   @override
-  State<MovieHorizontalListView> createState() => _MovieHorizontalListViewState();
+  State<MovieHorizontalListView> createState() =>
+      _MovieHorizontalListViewState();
 }
 
 //Reconvert to StateFull to be possible the infinite horizontal scroll
 class _MovieHorizontalListViewState extends State<MovieHorizontalListView> {
-
   final scrollController = ScrollController();
 
   @override
@@ -31,14 +32,13 @@ class _MovieHorizontalListViewState extends State<MovieHorizontalListView> {
     super.initState();
 
     scrollController.addListener(() {
-      if ( widget.loadNextPage == null) return;
+      if (widget.loadNextPage == null) return;
 
-      if ( (scrollController.position.pixels + 200) >= scrollController.position.maxScrollExtent ) {
-        
+      if ((scrollController.position.pixels + 200) >=
+          scrollController.position.maxScrollExtent) {
         widget.loadNextPage!();
-      }  
+      }
     });
-    
   }
 
   @override
@@ -59,20 +59,19 @@ class _MovieHorizontalListViewState extends State<MovieHorizontalListView> {
               subtitle: widget.subtitle,
             ),
           Expanded(
-            child: ListView.builder(
-              controller: scrollController,
-              itemCount: widget.movies.length,
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return FadeInRight(
-                  child: _Slide(
-                    movie: widget.movies[index],
-                  ),
-                );
-              },
-            )
-          )
+              child: ListView.builder(
+            controller: scrollController,
+            itemCount: widget.movies.length,
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return FadeInRight(
+                child: _Slide(
+                  movie: widget.movies[index],
+                ),
+              );
+            },
+          ))
         ],
       ),
     );
@@ -122,7 +121,6 @@ class _Slide extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           //Slides
           SizedBox(
             width: 150,
@@ -143,14 +141,17 @@ class _Slide extends StatelessWidget {
                       ),
                     );
                   }
-                  return FadeIn(child: child);
+                  return GestureDetector(
+                    onTap: () => context.push('/movie/${movie.id}'),
+                    child: FadeIn( child: child,),
+                  );
                 },
               ),
             ),
           ),
 
           const SizedBox(height: 5),
-          
+
           //Title
           SizedBox(
             width: 150,
@@ -166,13 +167,18 @@ class _Slide extends StatelessWidget {
             width: 150,
             child: Row(
               children: [
-                Icon( Icons.star_half, color: Colors.yellow.shade700 ),
-                const SizedBox(width: 3,),
-                Text(' ${movie.voteAverage} ', style: textStyle.bodyMedium?.copyWith(color: Colors.yellow.shade700)),
-          
-                const SizedBox(width: 20,),
-          
-                Text(HumanFormat.number(movie.popularity), style: textStyle.bodySmall),
+                Icon(Icons.star_half, color: Colors.yellow.shade700),
+                const SizedBox(
+                  width: 3,
+                ),
+                Text(' ${movie.voteAverage} ',
+                    style: textStyle.bodyMedium
+                        ?.copyWith(color: Colors.yellow.shade700)),
+                const SizedBox(
+                  width: 20,
+                ),
+                Text(HumanFormat.number(movie.popularity),
+                    style: textStyle.bodySmall),
               ],
             ),
           )

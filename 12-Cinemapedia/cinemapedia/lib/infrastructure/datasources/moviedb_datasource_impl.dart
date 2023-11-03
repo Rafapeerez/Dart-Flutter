@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 class MovieDBDatasource extends MoviesDataSource {
   final Dio dio = Dio(BaseOptions(
       baseUrl: 'https://api.themoviedb.org/3',
-      queryParameters: {'api_key': Environment.movieKey, 'language': 'en-UK'}));
+      queryParameters: {'api_key': Environment.movieKey, 'language': 'es-ES'}));
 
   List<Movie> _jsonToMovies(Map<String, dynamic> json) {
     final movieDbResponse = MovieDbResponse.fromJson(json);

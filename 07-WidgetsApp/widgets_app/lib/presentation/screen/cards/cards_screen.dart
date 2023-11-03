@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const CardsData = <Map<String, dynamic>>[
+const cardsData = <Map<String, dynamic>>[
   {'elevation': 0.0, 'Label': 'Elevation 0'},
   {'elevation': 1.0, 'Label': 'Elevation 1'},
   {'elevation': 2.0, 'Label': 'Elevation 2'},
@@ -35,13 +35,13 @@ class _CardsView extends StatelessWidget {
       //It allows do scroll to not errors by overflow
       child: Column(
         children: [
-          ...CardsData.map((card) =>
+          ...cardsData.map((card) =>
               _CardType1(elevation: card['elevation'], label: card['Label'])),
-          ...CardsData.map((card) =>
+          ...cardsData.map((card) =>
               _CardType2(elevation: card['elevation'], label: card['Label'])),
-          ...CardsData.map((card) =>
+          ...cardsData.map((card) =>
               _CardType3(elevation: card['elevation'], label: card['Label'])),
-          ...CardsData.map((card) =>
+          ...cardsData.map((card) =>
               _CardType4(elevation: card['elevation'], label: card['Label'])),
         ],
       ),
@@ -161,7 +161,6 @@ class _CardType4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
 
     return Card(
       clipBehavior: Clip.hardEdge, //Rounded border

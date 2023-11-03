@@ -122,7 +122,7 @@ class _MovieDetails extends StatelessWidget {
           ),
         ),
 
-        //TODO:Mostrar actores
+        //Actores
         _ActorsByMovie(movieID: movie.id.toString()),
 
         const SizedBox(height: 10)

@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 class ActorMovieDBDatasource extends ActorsDatasource {
   final Dio dio = Dio(BaseOptions(
       baseUrl: 'https://api.themoviedb.org/3',
-      queryParameters: {'api_key': Environment.movieKey, 'language': 'en-UK'}));
+      queryParameters: {'api_key': Environment.movieKey, 'language': 'es-ES'}));
 
   @override
   Future<List<Actor>> getActorsByMovie(String movieId) async {

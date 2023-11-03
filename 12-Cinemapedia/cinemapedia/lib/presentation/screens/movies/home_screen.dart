@@ -64,12 +64,12 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
               MovieHorizontalListView(
                 movies: nowPlayingMoving,
-                title: 'Now Playing',
-                subtitle: 'Present',
+                title: 'En este momento',
+                subtitle: 'Actualidad',
                 loadNextPage: () =>
                     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
               ),
-
+/*  */
               MovieHorizontalListView(
                 movies: popularMovies,
                 title: 'Popular',
@@ -79,14 +79,14 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
               MovieHorizontalListView(
                 movies: upcomingMovies,
-                title: 'Upcoming...',
+                title: 'Próximamente...',
                 loadNextPage: () =>
                     ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
               ),
 
               MovieHorizontalListView(
                 movies: topRatedMovies,
-                title: 'Top Rated',
+                title: 'Mejor Valoradas',
                 loadNextPage: () =>
                     ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
               ),

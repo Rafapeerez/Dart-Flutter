@@ -59,7 +59,7 @@ class _MovieHorizontalListViewState extends State<MovieHorizontalListView> {
               subtitle: widget.subtitle,
             ),
           Expanded(
-              child: ListView.builder(
+            child: ListView.builder(
             controller: scrollController,
             itemCount: widget.movies.length,
             scrollDirection: Axis.horizontal,
@@ -168,15 +168,13 @@ class _Slide extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.star_half, color: Colors.yellow.shade700),
-                const SizedBox(
-                  width: 3,
-                ),
+                const SizedBox( width: 3),
+
                 Text(' ${movie.voteAverage} ',
                     style: textStyle.bodyMedium
                         ?.copyWith(color: Colors.yellow.shade700)),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox( width: 20),
+                
                 Text(HumanFormat.number(movie.popularity),
                     style: textStyle.bodySmall),
               ],

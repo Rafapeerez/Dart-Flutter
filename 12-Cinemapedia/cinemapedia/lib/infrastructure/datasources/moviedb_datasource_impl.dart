@@ -50,7 +50,7 @@ class MovieDBDatasource extends MoviesDataSource {
   @override
   Future<List<Movie>> getUpcomings({int page = 1}) async {
     final response =
-        await dio.get('/movie/upcoming', queryParameters: {'page': page});
+        await dio.get('/movie/upcoming', queryParameters: { 'page': page });
 
     return _jsonToMovies(response.data);
   }
@@ -66,6 +66,15 @@ class MovieDBDatasource extends MoviesDataSource {
     final Movie movie = MovieMapper.movieDetailsToEntity(movieDetails);
 
     return movie;
+  }
+  
+  @override
+  Future<List<Movie>> searchMovies(String query) async {
+    if ( query.isEmpty ) return [];
+
+    final response = await dio.get('/search/movie', queryParameters: { 'query': query });
+
+    return _jsonToMovies(response.data);
   }
 
 }

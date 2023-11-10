@@ -1,4 +1,11 @@
+import 'package:isar/isar.dart';
+part 'movie.g.dart'; // flutter pub run build_runner build to create the file .g, create BBDD methods 
+
+@collection 
 class Movie {
+
+  Id isarID = Isar.autoIncrement;
+
   final bool adult;
   final String backdropPath;
   final List<String> genreIds;

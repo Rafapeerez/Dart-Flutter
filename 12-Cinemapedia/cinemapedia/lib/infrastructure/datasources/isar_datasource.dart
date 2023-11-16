@@ -13,32 +13,58 @@ class IsarDatasource extends LocalStorageDatasource {
   Future<Isar> openDB() async {
     final dir = await getApplicationDocumentsDirectory();
 
-    if ( Isar.instanceNames.isEmpty ) {
-      return await Isar.open(
-        [ MovieSchema ], 
-        inspector: true, // <--- Service to analyze local BD
-        directory: dir.path
-      );
+    if (Isar.instanceNames.isEmpty) {
+      return await Isar.open([MovieSchema],
+          inspector: true, // <--- Service to analyze local BD
+          directory: dir.path);
     }
 
     return Future.value(Isar.getInstance());
   }
 
   @override
-  Future<bool> isMovieFavourite(int movieID) {
-    // TODO: implement isMovieFavourite
-    throw UnimplementedError();
+  Future<bool> isMovieFavourite(int movieID) async {
+    final isar = await db;
+
+    final Movie? isFavouriteMovie = await isar.movies
+      .filter()
+      .idEqualTo(movieID)
+      .findFirst();
+
+    return isFavouriteMovie != null;
   }
 
   @override
-  Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) {
-    // TODO: implement loadMovies
-    throw UnimplementedError();
+  Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) async {
+    final isar = await db;
+
+    final List<Movie> movies = await isar.movies
+      .where()
+      .offset(offset)
+      .limit(limit)
+      .findAll();
+
+    return movies;
   }
 
   @override
-  Future<void> toggleFavourite(Movie movie) {
-    // TODO: implement toggleFavourite
-    throw UnimplementedError();
+  Future<void> toggleFavourite(Movie movie) async {
+    final isar = await db;
+
+    final favouriteMovie = await isar.movies
+    .filter()
+    .idEqualTo(movie.id)
+    .findFirst();
+
+    if ( favouriteMovie != null ){
+      //DELETE
+      isar.writeTxnSync(() => isar.movies.deleteSync(favouriteMovie.isarID));
+      return;
+    }
+
+    //INSERT
+    isar.writeTxnSync(() => isar.movies.putSync(movie));
+
+
   }
 }

@@ -17,8 +17,10 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   Timer? _debounceTimer;
 
-  SearchMovieDelegate(
-      {required this.searchMovies, required this.initialMovies});
+  SearchMovieDelegate({
+    required this.searchMovies, 
+    required this.initialMovies
+  });
 
   void clearStreams() {
     debouncedMovies.close();

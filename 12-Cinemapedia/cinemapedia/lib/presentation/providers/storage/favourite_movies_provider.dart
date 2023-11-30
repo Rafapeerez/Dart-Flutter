@@ -3,9 +3,9 @@ import 'package:cinemapedia/domain/repository/local_storage_repository.dart';
 import 'package:cinemapedia/presentation/providers/storage/local_storage_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final favouriteMovieProvider = StateNotifierProvider<StorageMoviesNotifier, Map<int, Movie>>((ref) {
-  
-  final localStorageRepository = ref.watch( localStorageRepositoryProvider );
+final favouriteMovieProvider =
+    StateNotifierProvider<StorageMoviesNotifier, Map<int, Movie>>((ref) {
+  final localStorageRepository = ref.watch(localStorageRepositoryProvider);
 
   return StorageMoviesNotifier(localStorageRepository: localStorageRepository);
 });
@@ -18,24 +18,37 @@ final favouriteMovieProvider = StateNotifierProvider<StorageMoviesNotifier, Map<
   }
  */
 class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
-  
   int page = 0;
   final LocalStorageRepository localStorageRepository;
 
   StorageMoviesNotifier({
     required this.localStorageRepository,
-  }): super({});
+  }) : super({});
 
   Future<List<Movie>> loadNextPage() async {
-    final movies = await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
+    final movies =
+        await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
     page++;
 
     final tempMoviesMap = <int, Movie>{};
-    for ( final movie in movies ){
+    for (final movie in movies) {
       tempMoviesMap[movie.id] = movie;
     }
-    state = { ...state, ...tempMoviesMap };
+    state = {...state, ...tempMoviesMap};
 
     return movies;
+  }
+
+  Future<void> toggleFavourite(Movie movie) async {
+    final bool isMovieInFavourites =
+        await localStorageRepository.isMovieFavourite(movie.id);
+    await localStorageRepository.toggleFavourite(movie);
+
+    if (isMovieInFavourites) {
+      state.remove(movie.id);
+    } else {
+      state[movie.id] = movie;
+    }
+    state = {...state};
   }
 }

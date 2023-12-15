@@ -1,10 +1,10 @@
 part of 'counter_cubit.dart';
 
-class CounterState {
+class CounterState extends Equatable{
   final int counter;
   final int transactionCounter;
 
-  CounterState({
+  const CounterState({
     required this.counter, 
     required this.transactionCounter
   });
@@ -16,5 +16,8 @@ class CounterState {
     counter: counter ?? this.counter, 
     transactionCounter: transactionCounter ?? this.transactionCounter
   );
+  
+  @override
+  List<Object> get props =>[counter, transactionCounter] ;
 
 }
